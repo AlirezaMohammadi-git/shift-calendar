@@ -13,13 +13,19 @@ const shiftMap = {
     11: "استراحت دوم",
     12: "استراحت آخر",
 };
+const todayElm = document.querySelector("#today")
+const startShiftElm = document.querySelector("#startShift")
+const todayShiftElm = document.querySelector("#todayShift")
+const clockElm = document.querySelector("#clock")
+const redSpanElm = document.querySelector('#red')
+
+
 
 function shiftString(dayNumber) {
     return shiftMap[dayNumber] || "شیفت نامعتبر";
 }
-
 // Calculate the number of days between two Persian dates
-function daysBetween(date1, date2) {
+function shiftDayCalculator(date1, date2) {
     // Normalize time
     date1 = date1.clone().hours(0).minutes(0).seconds(0).milliseconds(0);
     date2 = date2.clone().hours(0).minutes(0).seconds(0).milliseconds(0);
@@ -27,14 +33,34 @@ function daysBetween(date1, date2) {
     const diffDays = Math.abs(date1.diff(date2, 'days')) + 1;
     return (diffDays % 12) || 12;
 }
+function whatTimeIsIt() {
+    const date = new Date();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+}
+function showInformation(startShift) {
+    // current date:
+    const today = new persianDate().startOf('day');
+    const shiftDay = shiftDayCalculator(startShift, today);
 
-// Define the first shift date
-const firstDate = new persianDate([1404, 1, 27]).startOf('day');
-const today = new persianDate().startOf('day');
+    console.log("شیفت امروز:", shiftString(shiftDay));
+    console.log("تاریخ شروع شیفت:", startShift.format("YYYY/MM/DD"));
+    console.log("تاریخ امروز:", today.format("YYYY/MM/DD"));
+    todayElm.textContent = `تاریخ امروز : "${today.format("YYYY/MM/DD")}"`;
+    startShiftElm.textContent = `تاریخ شروع شیفت : "${startShift.format("YYYY/MM/DD")}"`
+    redSpanElm.textContent = `"${shiftString(shiftDay)}"`;
+    clockElm.textContent = whatTimeIsIt();
+    setInterval(() => { clockElm.textContent = whatTimeIsIt(); }, 1000)
+}
+function initialPage() {
+    // Define the first shift date
+    // first morning:
+    const startShift = new persianDate([1404, 1, 27]).startOf('day');
+    showInformation(startShift);
+}
 
-const shiftDay = daysBetween(firstDate, today);
-console.log("شیفت امروز:", shiftString(shiftDay));
 
-// Optional: Log formatted date details
-console.log("تاریخ شروع شیفت:", firstDate.format("YYYY/MM/DD"));
-console.log("تاریخ امروز:", today.format("YYYY/MM/DD"));
+
+initialPage();

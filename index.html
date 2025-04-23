@@ -4,10 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Date calculator</title>
 </head>
 
 <body>
+
+    <main>
+        <h1 id="today"> 1404.2.3 تاریخ امروز</h1>
+        <h2 id="startShift">تاریخ شروع شیفت : 1404.1.27</h2>
+        <h2>سیستم شیفت : چهار شیفتی (۳صبح-۳ظهر-۳شب-۳استراحت)</h2>
+        <h2 id="todayShift">شیفت امروز : <span id="red"></span></h2>
+        <h3 id="clock">ساعت : 12:24:23</h3>
+    </main>
+
     <!-- https://github.com/babakhani/PersianDate -->
     <script src="node_modules/persian-date/dist/persian-date.js" type="text/javascript"></script>
     <script src="app.js" type="module"></script>

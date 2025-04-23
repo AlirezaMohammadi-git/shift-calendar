@@ -1,0 +1,30 @@
+:root {
+    color-scheme: dark;
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark */
+}
+
+main {
+
+    h1,
+    h2,
+    h3 {
+        text-align: center;
+        direction: rtl;
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: 900;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        font-weight: 600;
+
+        #red {
+            color: rgb(255, 110, 110);
+            font-size: 2rem;
+        }
+    }
+
+}
