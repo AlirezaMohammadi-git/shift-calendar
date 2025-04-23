@@ -1,3 +1,4 @@
+
 // Shift mapping
 const shiftMap = {
     1: "صبح اول",
