@@ -19,6 +19,7 @@ const startShiftElm = document.querySelector("#startShift")
 const todayShiftElm = document.querySelector("#todayShift")
 const clockElm = document.querySelector("#clock")
 const redSpanElm = document.querySelector('#red')
+const startShiftInput = document.querySelector("#startShiftChanger")
 
 
 
@@ -55,13 +56,26 @@ function showInformation(startShift) {
     clockElm.textContent = whatTimeIsIt();
     setInterval(() => { clockElm.textContent = whatTimeIsIt(); }, 1000)
 }
+function initPersianDatepicker(options) {
+    jalaliDatepicker.startWatch(options);
+}
+function handleStartShiftDayChange(event) {
+    if (event.target.value !== "") {
+        let date = event.target.value.split('/').map(value => parseInt(value));
+        const startShift = new persianDate([date[0], date[1], date[2]]).startOf('day');
+        showInformation(startShift);
+    } else {
+        const startShift = new persianDate([1404, 1, 27]).startOf('day');
+        showInformation(startShift);
+    }
+}
 function initialPage() {
     // Define the first shift date
-    // first morning:
     const startShift = new persianDate([1404, 1, 27]).startOf('day');
     showInformation(startShift);
+    // initial datepicker for changing start shift date
+    initPersianDatepicker({ autoReadOnlyInput: true, topSpace: 10 });
+    startShiftInput.addEventListener('change', handleStartShiftDayChange);
 }
-
-
 
 initialPage();
